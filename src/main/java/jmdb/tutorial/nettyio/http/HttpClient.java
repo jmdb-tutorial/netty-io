@@ -2,6 +2,7 @@ package jmdb.tutorial.nettyio.http;
 
 
 import javax.net.ssl.SSLException;
+import java.net.InetSocketAddress;
 import java.net.URISyntaxException;
 
 /**
@@ -20,10 +21,10 @@ public class HttpClient {
         System.out.println("Going to request https://www.google.com via a local socks proxy");
 
 
-        GET("https://www.google.com");
+        GET("https://www.google.com", new InetSocketAddress("localhost", 3456));
     }
 
-    private static void GET(String url) throws java.net.URISyntaxException, javax.net.ssl.SSLException, InterruptedException {
+    private static void GET(String url, InetSocketAddress socksProxy) throws java.net.URISyntaxException, javax.net.ssl.SSLException, InterruptedException {
         java.net.URI uri = new java.net.URI(url);
         String scheme = uri.getScheme() == null ? "http" : uri.getScheme();
         String host = uri.getHost() == null ? "127.0.0.1" : uri.getHost();
@@ -57,7 +58,7 @@ public class HttpClient {
             io.netty.bootstrap.Bootstrap b = new io.netty.bootstrap.Bootstrap();
             b.group(group)
                     .channel(io.netty.channel.socket.nio.NioSocketChannel.class)
-                    .handler(new HttpClientInitialiser(sslCtx));
+                    .handler(new HttpClientInitialiser(sslCtx, socksProxy));
 
             // Make the connection attempt.
             io.netty.channel.Channel ch = b.connect(host, port).sync().channel();
