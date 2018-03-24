@@ -4,7 +4,26 @@ Herein are some examples of how to configure and use the netty-io networking lib
 
 In particular to communicate via the SOCKS protocol such that an application can communicate with a TOR network
 
-## SOCKS
+## SOCKS PROXY
+
+In this codebase you will find a class `HttpClient`
+
+To see it working, you first need to start a socks proxy , which happily we have a simple version of:
+
+```
+make start-socks-proxy
+```
+
+This will run a socks proxy on `localhost:3456`
+
+You can verify that its running by doing this in another terminal
+```
+make get-via-proxy url=https://www.google.com
+```
+
+
+
+## REFERENCES
 
 https://stackoverflow.com/questions/35119032/how-to-use-socks4-5-proxy-handlers-in-netty-client-4-1
 
