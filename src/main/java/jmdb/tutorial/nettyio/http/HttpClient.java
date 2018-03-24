@@ -19,7 +19,6 @@ public class HttpClient {
     public static void main(String[] args) throws URISyntaxException, SSLException, InterruptedException {
         System.out.println("Going to request https://www.google.com via a local socks proxy");
 
-        String url = "https://www.google.com";
 
         GET("https://www.google.com");
     }
